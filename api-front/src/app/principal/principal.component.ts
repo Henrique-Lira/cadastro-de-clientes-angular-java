@@ -9,6 +9,8 @@ import { ClienteService } from '../servico/cliente.service';
 })
 export class PrincipalComponent {
 
+  novoTelefone: string = '';
+
   cliente = new Cliente();
 
   btnCadastro = true;
@@ -164,6 +166,22 @@ export class PrincipalComponent {
         .subscribe(retorno => this.clientes = retorno);
     } else {
       this.selecionar();
+    }
+  }
+
+  adicionarTelefone(cliente: Cliente): void {
+    if (this.novoTelefone.trim() !== '') {
+      this.servico.adicionarTelefone(cliente.codigo, this.novoTelefone).subscribe(
+        (clienteAtualizado) => {
+          this.novoTelefone = ''; // Limpa o campo
+          cliente.telefones = clienteAtualizado.telefones; // Atualiza a lista de telefones
+          alert('Telefone adicionado com sucesso!');
+        },
+        (error) => {
+          console.error('Erro ao adicionar telefone:', error);
+          alert('Ocorreu um erro ao adicionar o telefone.');
+        }
+      );
     }
   }
 

@@ -7,7 +7,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "clientes")
@@ -31,5 +40,11 @@ public class Cliente {
     private Date dataCadastro; // Data de Cadastro
 
     private boolean ativo; // Ativo (se está ativo)
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "telefones", joinColumns = @JoinColumn(name = "cliente_codigo"))
+    @Column(name = "numero")
+    private List<String> telefones = new ArrayList<>(); // Adicione a propriedade de telefones
+  
 
 }

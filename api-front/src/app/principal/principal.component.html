@@ -39,6 +39,7 @@
       <th>#</th>
       <th>Nome</th>
       <th>Tipo</th>
+      <th>Telefone</th>
       <th>Documento</th>
       <th>RG ou IE</th>
       <th>Data de Cadastro</th>
@@ -50,6 +51,15 @@
       <td>{{ i + 1 }}</td>
       <td>{{ c.nome }}</td>
       <td>{{ c.tipo }}</td>
+
+      <td>
+        <ul>
+          <li *ngFor="let telefone of c.telefones">{{ telefone }}</li>
+        </ul>
+        <input type="text" [(ngModel)]="novoTelefone" placeholder="Novo Telefone">
+        <button class="btn btn-primary" (click)="adicionarTelefone(c)">Adicionar Telefone</button>
+      </td>
+
       <td>
         {{ c.tipo === 'Pessoa Jurídica' ? (c.documento | mask:'00.000.000/0000-00') : (c.documento | mask:'000.000.000-00') }}
       </td>

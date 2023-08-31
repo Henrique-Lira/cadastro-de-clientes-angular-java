@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.projeto.api.modelo.Cliente;
 import br.com.projeto.api.repositorio.Repositorio;
+import org.springframework.http.ResponseEntity;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -65,5 +67,16 @@ public class Controle {
     @GetMapping("/verificarExistenciaDocumento/{documento}")
     public boolean verificarExistenciaDocumento(@PathVariable String documento) {
         return acao.existsByDocumento(documento);
+    }
+
+    @PostMapping("/{codigo}/adicionar-telefone")
+    public ResponseEntity<Cliente> adicionarTelefone(@PathVariable long codigo, @RequestBody String telefone) {
+        Cliente cliente = acao.findById(codigo).orElse(null);
+        if (cliente != null) {
+            cliente.getTelefones().add(telefone);
+            Cliente clienteAtualizado = acao.save(cliente);
+            return ResponseEntity.ok(clienteAtualizado);
+        }
+        return ResponseEntity.notFound().build();
     }
 }

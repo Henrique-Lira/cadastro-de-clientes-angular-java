@@ -6,4 +6,5 @@ export class Cliente {
   rgOuIe!: string;
   dataCadastro!: Date;
   ativo!: boolean;
+  telefones: string[] = [];
 }
