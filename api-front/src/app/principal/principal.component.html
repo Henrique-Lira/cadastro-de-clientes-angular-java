@@ -45,13 +45,14 @@
       <th>Ativo</th>
     </tr>
   </thead>
-
   <tbody>
     <tr *ngFor="let c of clientes; index as i">
       <td>{{ i + 1 }}</td>
       <td>{{ c.nome }}</td>
       <td>{{ c.tipo }}</td>
-      <td>{{ c.documento }}</td>
+      <td>
+        {{ c.tipo === 'Pessoa Jurídica' ? (c.documento | mask:'00.000.000/0000-00') : (c.documento | mask:'000.000.000-00') }}
+      </td>
       <td>{{ c.rgOuIe }}</td>
       <td>{{ c.dataCadastro | date:'dd/MM/yyyy' }}</td>
       <td>{{ c.ativo ? 'Sim' : 'Não' }}</td>
@@ -67,3 +68,6 @@
     </tr>
   </tbody>
 </table>
+
+
+
