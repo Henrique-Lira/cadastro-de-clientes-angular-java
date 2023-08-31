@@ -32,7 +32,6 @@ export class PrincipalComponent {
     @Inject(LOCALE_ID) private locale: string
   ) { }
 
-
   selecionar(): void {
     this.servico.selecionar()
       .subscribe(retorno => this.clientes = retorno)
@@ -150,6 +149,18 @@ export class PrincipalComponent {
   limparBusca(): void {
     this.termoBusca = '';
     this.selecionar();
+  }
+
+  filtrarClientes(filtro: 'ativos' | 'inativos' | 'todos'): void {
+    if (filtro === 'ativos') {
+      this.servico.filtrarClientesAtivos()
+        .subscribe(retorno => this.clientes = retorno);
+    } else if (filtro === 'inativos') {
+      this.servico.filtrarClientesInativos()
+        .subscribe(retorno => this.clientes = retorno);
+    } else {
+      this.selecionar();
+    }
   }
 
   ngOnInit(): void {

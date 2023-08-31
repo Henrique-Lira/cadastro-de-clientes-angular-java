@@ -10,10 +10,8 @@
   <input type="text" [placeholder]="placeholderDocumento" class="form-control" name="documento"
   [(ngModel)]="cliente.documento" mask="{{ documentoMask }}">
 
-
   <!-- RG ou IE -->
   <input type="text" placeholder="{{ placeholderrgOuIe }}" class="form-control" name="rgOuIe" [(ngModel)]="cliente.rgOuIe">
-
 
   <input *ngIf="btnCadastro" type="button" value="Cadastrar" class="btn btn-primary" (click)="cadastrar()">
   <input *ngIf="!btnCadastro" type="button" value="Alterar" class="btn btn-warning" (click)="editar()">
@@ -29,6 +27,11 @@
   <button class="btn btn-secondary" (click)="limparBusca()">Limpar</button>
 </div>
 
+<div class="mb-3">
+  <button class="btn btn-primary" (click)="filtrarClientes('ativos')">Ativos</button>
+  <button class="btn btn-primary" (click)="filtrarClientes('inativos')">Inativos</button>
+  <button class="btn btn-primary" (click)="filtrarClientes('todos')">Todos</button>
+</div>
 
 <table class="table" *ngIf="tabela">
   <thead>
@@ -42,7 +45,6 @@
       <th>Ativo</th>
     </tr>
   </thead>
-
 
   <tbody>
     <tr *ngFor="let c of clientes; index as i">

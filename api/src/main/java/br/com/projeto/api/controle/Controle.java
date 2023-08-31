@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.projeto.api.modelo.Cliente;
@@ -20,14 +21,20 @@ public class Controle {
     @Autowired
     private Repositorio acao;
 
-    @PostMapping("/")
-    public Cliente Cadastrar(@RequestBody Cliente c) {
-        return acao.save(c);
+    @GetMapping("/")
+    public Iterable<Cliente> selecionar(@RequestParam(name = "filtro", defaultValue = "todos") String filtro) {
+        if (filtro.equals("ativos")) {
+            return acao.findByAtivoTrue();
+        } else if (filtro.equals("inativos")) {
+            return acao.findByAtivoFalse();
+        } else {
+            return acao.findAll();
+        }
     }
 
-    @GetMapping("/")
-    public Iterable<Cliente> selecionar() {
-        return acao.findAll();
+    @PostMapping("/")
+    public Cliente cadastrar(@RequestBody Cliente c) {
+        return acao.save(c);
     }
 
     @PutMapping("/")
@@ -54,6 +61,4 @@ public class Controle {
     public Iterable<Cliente> buscarPorNome(@PathVariable String nome) {
         return acao.findByNomeContainingIgnoreCase(nome);
     }
-    
-
 }

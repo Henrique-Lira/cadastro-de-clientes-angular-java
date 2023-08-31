@@ -32,5 +32,12 @@ export class ClienteService {
     return this.http.get<Cliente[]>(`${this.url}/buscarPorNome/${nome}`);
   }
 
+  filtrarClientesAtivos(): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.url}?filtro=ativos`);
+  }
+
+  filtrarClientesInativos(): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.url}?filtro=inativos`);
+  }
 
 }

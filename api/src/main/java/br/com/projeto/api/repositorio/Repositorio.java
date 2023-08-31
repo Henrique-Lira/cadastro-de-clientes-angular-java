@@ -7,5 +7,9 @@ import br.com.projeto.api.modelo.Cliente;
 public interface Repositorio extends CrudRepository<Cliente, Long>{
 
     Iterable<Cliente> findByNomeContainingIgnoreCase(String nome);
+
+    Iterable<Cliente> findByAtivoTrue();
+
+    Iterable<Cliente> findByAtivoFalse();
     
 }
