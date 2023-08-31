@@ -2,6 +2,26 @@
   padding: 20px;
 }
 
+.pesquisa{
+  float: right;
+  display: flex;
+  width: 300px;
+  input{
+    margin-right: 5px;
+  }
+}
+
+.btn-selected {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.btn-selected:focus,
+.btn-selected:hover {
+  background-color: #0056b3;
+}
+
+
 .title {
   font-size: 24px;
   margin-bottom: 20px;

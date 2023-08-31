@@ -33,17 +33,18 @@
     </div>
   </form><br>
 
-  <div class="mb-3">
+  <div class="pesquisa mb-3">
     <input type="text" class="form-control" [(ngModel)]="termoBusca" placeholder="Buscar por nome"
       (input)="filtrarClientesPorNome()">
     <button class="btn btn-secondary" (click)="limparBusca()">Limpar</button>
   </div>
 
   <div class="btn-group">
-    <button class="btn btn-primary" (click)="filtrarClientes('ativos')">Ativos</button>
-    <button class="btn btn-primary" (click)="filtrarClientes('inativos')">Inativos</button>
-    <button class="btn btn-primary" (click)="filtrarClientes('todos')">Todos</button>
+    <button class="btn" [ngClass]="filtroAtual === 'ativos' ? 'btn-selected' : ''" (click)="filtrarClientes('ativos')">Ativos</button>
+    <button class="btn" [ngClass]="filtroAtual === 'inativos' ? 'btn-selected' : ''" (click)="filtrarClientes('inativos')">Inativos</button>
+    <button class="btn" [ngClass]="filtroAtual === 'todos' ? 'btn-selected' : ''" (click)="filtrarClientes('todos')">Todos</button>
   </div>
+
 
   <table class="table table-bordered" *ngIf="tabela">
     <thead class="thead-light">

@@ -10,7 +10,6 @@ import { ClienteService } from '../servico/cliente.service';
 })
 export class PrincipalComponent {
 
-  displayedColumns: string[] = ['index', 'nome', /* ... Outras colunas ... */];
   clienteOriginal: Cliente | null = null;
   formCliente!: FormGroup;
   cliente = new Cliente();
@@ -26,7 +25,7 @@ export class PrincipalComponent {
   documentoMask!: string;
   novoTelefone: string = '';
   termoBusca: string = '';
-  filtroAtual!: string;
+  filtroAtual = 'todos';
 
   constructor(
     private servico: ClienteService,
