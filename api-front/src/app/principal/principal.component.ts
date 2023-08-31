@@ -170,11 +170,11 @@ export class PrincipalComponent {
   }
 
   adicionarTelefone(cliente: Cliente): void {
-    if (this.novoTelefone.trim() !== '') {
-      this.servico.adicionarTelefone(cliente.codigo, this.novoTelefone).subscribe(
-        (clienteAtualizado) => {
-          this.novoTelefone = ''; // Limpa o campo
-          cliente.telefones = clienteAtualizado.telefones; // Atualiza a lista de telefones
+    if (cliente.novoTelefone.trim() !== '') {
+      cliente.telefones.push(cliente.novoTelefone); // Adiciona o telefone à lista de telefones do cliente
+      this.servico.editar(cliente).subscribe(
+        () => {
+          cliente.novoTelefone = ''; // Limpa o campo
           alert('Telefone adicionado com sucesso!');
         },
         (error) => {

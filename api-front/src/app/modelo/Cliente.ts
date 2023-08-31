@@ -7,4 +7,5 @@ export class Cliente {
   dataCadastro!: Date;
   ativo!: boolean;
   telefones: string[] = [];
+  novoTelefone: string = '';
 }

@@ -56,11 +56,11 @@
       <td>
         <ul>
           <li *ngFor="let telefone of c.telefones; let idx = index">
-            {{ telefone | mask: '(00) 00000-0000' }}
+            {{ telefone | mask: '(00) 0000-0000' }}
             <button class="btn btn-danger btn-sm" (click)="removerTelefone(c, idx)">Remover</button>
           </li>
         </ul>
-        <input type="text" [(ngModel)]="novoTelefone" placeholder="Novo Telefone" mask="(00) 00000-0000">
+        <input type="text" [(ngModel)]="c.novoTelefone" placeholder="Novo Telefone" mask="(00) 0000-0000">
         <button class="btn btn-primary" (click)="adicionarTelefone(c)">Adicionar Telefone</button>
       </td>
 
