@@ -27,7 +27,7 @@ export class PrincipalComponent {
   placeholderrgOuIe: string = 'RG ou IE';
   documentoMask!: string;
   termoBusca: string = '';
-  filtroAtivo: 'todos' | 'ativos' | 'inativos' = 'todos';
+  filtroAtual!: string;
 
   constructor(
     private servico: ClienteService,
@@ -141,6 +141,20 @@ export class PrincipalComponent {
       .subscribe(retorno => {
         cliente.ativo = retorno.ativo;
       });
+
+  this.atualizarListagem()
+  }
+
+  atualizarListagem(){
+    if(this.filtroAtual === 'ativos'){
+      setTimeout(() => {
+        this.filtrarClientes('ativos')
+      }, 100);
+    } else if (this.filtroAtual === 'inativos'){
+      setTimeout(() => {
+        this.filtrarClientes('inativos')
+      }, 100);
+    }
   }
 
   buscarPorNome(): void {
@@ -167,6 +181,7 @@ export class PrincipalComponent {
     } else {
       this.selecionar();
     }
+    this.filtroAtual = filtro;
   }
 
   adicionarTelefone(cliente: Cliente): void {
