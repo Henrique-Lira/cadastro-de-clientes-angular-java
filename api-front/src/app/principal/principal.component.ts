@@ -241,6 +241,16 @@ export class PrincipalComponent {
     );
   }
 
+  filtrarClientesPorNome(): void {
+    if (this.termoBusca.trim() === '') {
+      this.selecionar();
+    } else {
+      this.servico.buscarPorNome(this.termoBusca)
+        .subscribe(retorno => this.clientes = retorno);
+    }
+  }
+
+
   ngOnInit(): void {
     this.selecionar();
   }
