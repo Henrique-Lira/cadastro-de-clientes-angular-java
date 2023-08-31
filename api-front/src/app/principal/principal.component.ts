@@ -1,5 +1,4 @@
 import { Component, Inject, LOCALE_ID } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cliente } from '../modelo/Cliente';
 import { ClienteService } from '../servico/cliente.service';
 
@@ -10,34 +9,28 @@ import { ClienteService } from '../servico/cliente.service';
 })
 export class PrincipalComponent {
 
-  displayedColumns: string[] = ['index', 'nome', 'tipo', 'documento', 'rgOuIe', 'dataCadastro', 'ativo', 'actions', 'toggleStatus'];
-  clientes: Cliente[] = [];
-  clienteForm!: FormGroup; // Declare o FormGroup
   cliente = new Cliente();
+
   btnCadastro = true;
+
   tabela = true;
-  placeholderDocumento: string = 'CPF ou CNPJ';
-  placeholderrgOuIe: string = 'RG ou IE';
-  documentoMask!: string;
-  termoBusca: string = '';
+
+  clientes: Cliente[] = [];
+
   tipos: any[] = [
     { nome: 'Pessoa Física', placeholderDocumento: 'CPF', placeholderrgOuIe: 'RG', documentoMask: '000.000.000-00', },
     { nome: 'Pessoa Jurídica', placeholderDocumento: 'CNPJ', placeholderrgOuIe: 'IE', documentoMask: '00.000.000/0000-00' },
   ];
+  placeholderDocumento: string = 'CPF ou CNPJ';
+  placeholderrgOuIe: string = 'RG ou IE';
+  documentoMask!: string;
+  termoBusca: string = '';
   filtroAtivo: 'todos' | 'ativos' | 'inativos' = 'todos';
 
   constructor(
-    private formBuilder: FormBuilder,
     private servico: ClienteService,
     @Inject(LOCALE_ID) private locale: string
-  ) {
-    this.clienteForm = this.formBuilder.group({
-      nome: ['', Validators.required],
-      tipo: ['', Validators.required],
-      documento: ['', Validators.required],
-      rgOuIe: [''],
-    });
-  }
+  ) { }
 
   selecionar(): void {
     this.servico.selecionar()
