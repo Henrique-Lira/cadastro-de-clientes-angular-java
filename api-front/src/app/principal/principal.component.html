@@ -1,0 +1,67 @@
+<form>
+  <!-- Nome -->
+  <input type="text" placeholder="Nome" class="form-control" name="nome" [(ngModel)]="cliente.nome">
+
+  <!-- Tipo -->
+  <select class="form-control" name="tipo" [(ngModel)]="cliente.tipo" (change)="pessoaFisicaOuJuridica()">
+    <option *ngFor="let tipo of tipos" [value]="tipo.nome">{{ tipo.nome }}</option>
+  </select>
+
+  <input type="text" [placeholder]="placeholderDocumento" class="form-control" name="documento"
+  [(ngModel)]="cliente.documento" mask="{{ documentoMask }}">
+
+
+  <!-- RG ou IE -->
+  <input type="text" placeholder="{{ placeholderrgOuIe }}" class="form-control" name="rgOuIe" [(ngModel)]="cliente.rgOuIe">
+
+
+  <input *ngIf="btnCadastro" type="button" value="Cadastrar" class="btn btn-primary" (click)="cadastrar()">
+  <input *ngIf="!btnCadastro" type="button" value="Alterar" class="btn btn-warning" (click)="editar()">
+  <input *ngIf="!btnCadastro" type="button" value="Remover" class="btn btn-danger" (click)="remover()">
+  <input *ngIf="!btnCadastro" type="button" value="Cancelar" class="btn btn-secondary" (click)="cancelar()">
+</form>
+
+<div class="mb-3">
+  <input type="text" placeholder="Buscar por nome" class="form-control" [(ngModel)]="termoBusca">
+</div>
+<div class="mb-3">
+  <button class="btn btn-primary" (click)="buscarPorNome()">Buscar</button>
+  <button class="btn btn-secondary" (click)="limparBusca()">Limpar</button>
+</div>
+
+
+<table class="table" *ngIf="tabela">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Tipo</th>
+      <th>Documento</th>
+      <th>RG ou IE</th>
+      <th>Data de Cadastro</th>
+      <th>Ativo</th>
+    </tr>
+  </thead>
+
+
+  <tbody>
+    <tr *ngFor="let c of clientes; index as i">
+      <td>{{ i + 1 }}</td>
+      <td>{{ c.nome }}</td>
+      <td>{{ c.tipo }}</td>
+      <td>{{ c.documento }}</td>
+      <td>{{ c.rgOuIe }}</td>
+      <td>{{ c.dataCadastro | date:'dd/MM/yyyy' }}</td>
+      <td>{{ c.ativo ? 'Sim' : 'Não' }}</td>
+      <td>
+        <button class="btn btn-success" (click)="selecionarCliente(i)">Editar</button>
+        <button class="btn btn-danger" (click)="removerCliente(c)">Excluir</button>
+      </td>
+      <td>
+        <button class="btn btn-secondary" (click)="alternarAtivoCliente(c)">
+          {{ c.ativo ? 'Desativar' : 'Ativar' }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
