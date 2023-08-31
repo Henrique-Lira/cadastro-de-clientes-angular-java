@@ -1,73 +1,110 @@
-<form>
+<form [formGroup]="clienteForm">
   <!-- Nome -->
-  <input type="text" placeholder="Nome" class="form-control" name="nome" [(ngModel)]="cliente.nome">
+  <mat-form-field>
+    <input matInput placeholder="Nome" formControlName="nome">
+  </mat-form-field>
 
   <!-- Tipo -->
-  <select class="form-control" name="tipo" [(ngModel)]="cliente.tipo" (change)="pessoaFisicaOuJuridica()">
-    <option *ngFor="let tipo of tipos" [value]="tipo.nome">{{ tipo.nome }}</option>
-  </select>
+  <mat-form-field>
+    <mat-label>Tipo</mat-label>
+    <mat-select formControlName="tipo" (selectionChange)="pessoaFisicaOuJuridica()">
+      <mat-option *ngFor="let tipo of tipos" [value]="tipo.nome">{{ tipo.nome }}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-  <input type="text" [placeholder]="placeholderDocumento" class="form-control" name="documento"
-  [(ngModel)]="cliente.documento" mask="{{ documentoMask }}">
+  <!-- Documento -->
+  <mat-form-field>
+    <input matInput [placeholder]="placeholderDocumento" formControlName="documento" [mask]="documentoMask">
+  </mat-form-field>
 
   <!-- RG ou IE -->
-  <input type="text" placeholder="{{ placeholderrgOuIe }}" class="form-control" name="rgOuIe" [(ngModel)]="cliente.rgOuIe">
+  <mat-form-field>
+    <input matInput [placeholder]="placeholderrgOuIe" formControlName="rgOuIe">
+  </mat-form-field>
 
-  <input *ngIf="btnCadastro" type="button" value="Cadastrar" class="btn btn-primary" (click)="cadastrar()">
-  <input *ngIf="!btnCadastro" type="button" value="Alterar" class="btn btn-warning" (click)="editar()">
-  <input *ngIf="!btnCadastro" type="button" value="Remover" class="btn btn-danger" (click)="remover()">
-  <input *ngIf="!btnCadastro" type="button" value="Cancelar" class="btn btn-secondary" (click)="cancelar()">
+  <!-- Botões -->
+  <div *ngIf="btnCadastro">
+    <button mat-raised-button color="primary" (click)="cadastrar()">Cadastrar</button>
+  </div>
+  <div *ngIf="!btnCadastro">
+    <button mat-raised-button color="warn" (click)="editar()">Alterar</button>
+    <button mat-raised-button color="accent" (click)="remover()">Remover</button>
+    <button mat-raised-button (click)="cancelar()">Cancelar</button>
+  </div>
 </form>
 
-<div class="mb-3">
-  <input type="text" placeholder="Buscar por nome" class="form-control" [(ngModel)]="termoBusca">
-</div>
-<div class="mb-3">
-  <button class="btn btn-primary" (click)="buscarPorNome()">Buscar</button>
-  <button class="btn btn-secondary" (click)="limparBusca()">Limpar</button>
+<mat-form-field class="search-field">
+  <input matInput placeholder="Buscar por nome" [(ngModel)]="termoBusca">
+</mat-form-field>
+
+<div class="btn-group">
+  <button mat-raised-button color="primary" (click)="buscarPorNome()">Buscar</button>
+  <button mat-raised-button color="warn" (click)="limparBusca()">Limpar</button>
 </div>
 
-<div class="mb-3">
-  <button class="btn btn-primary" (click)="filtrarClientes('ativos')">Ativos</button>
-  <button class="btn btn-primary" (click)="filtrarClientes('inativos')">Inativos</button>
-  <button class="btn btn-primary" (click)="filtrarClientes('todos')">Todos</button>
+<div class="btn-group">
+  <button mat-raised-button color="primary" (click)="filtrarClientes('ativos')">Ativos</button>
+  <button mat-raised-button color="primary" (click)="filtrarClientes('inativos')">Inativos</button>
+  <button mat-raised-button color="primary" (click)="filtrarClientes('todos')">Todos</button>
 </div>
 
-<table class="table" *ngIf="tabela">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Nome</th>
-      <th>Tipo</th>
-      <th>Documento</th>
-      <th>RG ou IE</th>
-      <th>Data de Cadastro</th>
-      <th>Ativo</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let c of clientes; index as i">
-      <td>{{ i + 1 }}</td>
-      <td>{{ c.nome }}</td>
-      <td>{{ c.tipo }}</td>
-      <td>
-        {{ c.tipo === 'Pessoa Jurídica' ? (c.documento | mask:'00.000.000/0000-00') : (c.documento | mask:'000.000.000-00') }}
-      </td>
-      <td>{{ c.rgOuIe }}</td>
-      <td>{{ c.dataCadastro | date:'dd/MM/yyyy' }}</td>
-      <td>{{ c.ativo ? 'Sim' : 'Não' }}</td>
-      <td>
-        <button class="btn btn-success" (click)="selecionarCliente(i)">Editar</button>
-        <button class="btn btn-danger" (click)="removerCliente(c)">Excluir</button>
-      </td>
-      <td>
-        <button class="btn btn-secondary" (click)="alternarAtivoCliente(c)">
-          {{ c.ativo ? 'Desativar' : 'Ativar' }}
-        </button>
-      </td>
-    </tr>
-  </tbody>
+<table mat-table class="table" *ngIf="tabela">
+  <ng-container matColumnDef="index">
+    <th mat-header-cell *matHeaderCellDef>#</th>
+    <td mat-cell *matCellDef="let c; let i = index">{{ i + 1 }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let c">{{ c.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="tipo">
+    <th mat-header-cell *matHeaderCellDef>Tipo</th>
+    <td mat-cell *matCellDef="let c">{{ c.tipo }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="documento">
+    <th mat-header-cell *matHeaderCellDef>Documento</th>
+    <td mat-cell *matCellDef="let c">{{ c.tipo === 'Pessoa Jurídica' ? (c.documento | mask:'00.000.000/0000-00') : (c.documento | mask:'000.000.000-00') }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="rgOuIe">
+    <th mat-header-cell *matHeaderCellDef>RG ou IE</th>
+    <td mat-cell *matCellDef="let c">{{ c.rgOuIe }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataCadastro">
+    <th mat-header-cell *matHeaderCellDef>Data de Cadastro</th>
+    <td mat-cell *matCellDef="let c">{{ c.dataCadastro | date:'dd/MM/yyyy' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="ativo">
+    <th mat-header-cell *matHeaderCellDef>Ativo</th>
+    <td mat-cell *matCellDef="let c">
+      <button mat-icon-button (click)="alternarAtivoCliente(c)">
+        <mat-icon>{{ c.ativo ? 'check' : 'close' }}</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Ações</th>
+    <td mat-cell *matCellDef="let c">
+      <button mat-raised-button color="primary" (click)="selecionarCliente(c)">Editar</button>
+      <button mat-raised-button color="warn" (click)="removerCliente(c)">Excluir</button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="toggleStatus">
+    <th mat-header-cell *matHeaderCellDef>Ativar/Desativar</th>
+    <td mat-cell *matCellDef="let c">
+      <button mat-raised-button color="accent" (click)="alternarAtivoCliente(c)">
+        {{ c.ativo ? 'Desativar' : 'Ativar' }}
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-
-
-
