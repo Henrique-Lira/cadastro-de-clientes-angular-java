@@ -9,6 +9,8 @@ import { ClienteService } from '../servico/cliente.service';
 })
 export class PrincipalComponent {
 
+  clienteOriginal: Cliente | null = null;
+
   novoTelefone: string = '';
 
   cliente = new Cliente();
@@ -59,10 +61,12 @@ export class PrincipalComponent {
   }
 
   selecionarCliente(posicao: number): void {
-    this.cliente = this.clientes[posicao];
+    this.clienteOriginal = { ...this.clientes[posicao] };
+    this.cliente = { ...this.clientes[posicao] };
     this.btnCadastro = false;
     this.tabela = false;
   }
+
 
   removerCliente(cliente: Cliente): void {
     if (confirm(`Deseja realmente excluir o cliente ${cliente.nome}?`)) {
@@ -75,10 +79,30 @@ export class PrincipalComponent {
   }
 
   editar(): void {
+    // Verificar se o documento foi alterado e se já existe para outro cliente
+    if (this.cliente.documento !== this.clienteOriginal?.documento) {
+      this.servico.verificarExistenciaDocumentoEditando(this.cliente.documento, this.cliente.codigo).subscribe(
+        documentoExiste => {
+          if (documentoExiste) {
+            alert('CPF/CNPJ já está cadastrado.');
+            return;
+          } else {
+            this.realizarEdicao();
+          }
+        },
+        error => {
+          console.error('Erro ao verificar existência de documento:', error);
+          alert('Ocorreu um erro ao verificar o documento.');
+        }
+      );
+    } else {
+      this.realizarEdicao();
+    }
+  }
 
-    this.servico.editar(this.cliente)
-      .subscribe(retorno => {
-
+  private realizarEdicao(): void {
+    this.servico.editar(this.cliente).subscribe(
+      retorno => {
         let posicao = this.clientes.findIndex(obj => {
           return obj.codigo == retorno.codigo;
         });
@@ -86,14 +110,19 @@ export class PrincipalComponent {
         this.clientes[posicao] = retorno;
 
         this.cliente = new Cliente();
+        this.clienteOriginal = null;
 
         this.btnCadastro = true;
-
         this.tabela = true;
 
         alert('Cliente alterado com sucesso!');
-
-      });
+        this.selecionar(); // Atualizar a lista de clientes
+      },
+      error => {
+        console.error('Erro ao editar cliente:', error);
+        alert('Ocorreu um erro ao editar o cliente.');
+      }
+    );
   }
 
   remover(): void {
@@ -141,7 +170,6 @@ export class PrincipalComponent {
       .subscribe(retorno => {
         cliente.ativo = retorno.ativo;
       });
-
   this.atualizarListagem()
   }
 

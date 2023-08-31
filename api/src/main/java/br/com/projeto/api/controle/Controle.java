@@ -89,4 +89,10 @@ public class Controle {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/verificarExistenciaDocumentoEditando/{documento}/{codigo}")
+    public boolean verificarExistenciaDocumentoEditando(@PathVariable String documento, @PathVariable long codigo) {
+        return acao.existsByDocumentoAndCodigoNot(documento, codigo);
+    }
+
 }
