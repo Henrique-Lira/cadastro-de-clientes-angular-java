@@ -25,16 +25,13 @@
     <div class="btn-group">
       <button *ngIf="btnCadastro" class="btn btn-primary" (click)="cadastrar()">Cadastrar</button>
       <button *ngIf="!btnCadastro" class="btn btn-warning" (click)="editar()">Alterar</button>
-      <button *ngIf="!btnCadastro" class="btn btn-danger" (click)="remover()">Remover</button>
       <button *ngIf="!btnCadastro" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
     </div>
-  </form>
+  </form><br>
 
   <div class="mb-3">
     <input type="text" class="form-control" [(ngModel)]="termoBusca" placeholder="Buscar por nome"
-      (input)="filtrarClientesPorNome()">
-  </div>
-  <div class="btn-group">
+    (input)="filtrarClientesPorNome()">
     <button class="btn btn-secondary" (click)="limparBusca()">Limpar</button>
   </div>
 

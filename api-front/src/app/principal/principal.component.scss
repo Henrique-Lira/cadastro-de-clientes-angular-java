@@ -1,14 +1,33 @@
-form{
-  padding-top: 200px;
-  width: 500px;
-  margin: 30px auto;
-  text-align: center;
+body {
+  background-color: #f4f4f4;
+  margin-top: 30px;
 }
-
-input, select{
-  margin-bottom: 10px;
+.container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
-
-input[type="button"]{
-  margin-right: 10px;
+.form-group {
+  margin-bottom: 15px;
+}
+.btn-group {
+  margin-top: 10px;
+}
+.input-group-append {
+  padding-left: 10px;
+}
+.list-unstyled {
+  padding-left: 0;
+}
+.thead-light {
+  background-color: #f8f9fa;
+}
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
 }
