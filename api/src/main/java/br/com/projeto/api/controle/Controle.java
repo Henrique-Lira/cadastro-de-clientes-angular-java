@@ -15,7 +15,6 @@ import br.com.projeto.api.modelo.Cliente;
 import br.com.projeto.api.repositorio.Repositorio;
 import org.springframework.http.ResponseEntity;
 
-
 @RestController
 @CrossOrigin(origins = "*")
 public class Controle {
@@ -74,6 +73,17 @@ public class Controle {
         Cliente cliente = acao.findById(codigo).orElse(null);
         if (cliente != null) {
             cliente.getTelefones().add(telefone);
+            Cliente clienteAtualizado = acao.save(cliente);
+            return ResponseEntity.ok(clienteAtualizado);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/{codigo}/remover-telefone")
+    public ResponseEntity<Cliente> removerTelefone(@PathVariable long codigo, @RequestBody int indice) {
+        Cliente cliente = acao.findById(codigo).orElse(null);
+        if (cliente != null && indice >= 0 && indice < cliente.getTelefones().size()) {
+            cliente.getTelefones().remove(indice);
             Cliente clienteAtualizado = acao.save(cliente);
             return ResponseEntity.ok(clienteAtualizado);
         }

@@ -54,7 +54,10 @@
 
       <td>
         <ul>
-          <li *ngFor="let telefone of c.telefones">{{ telefone }}</li>
+          <li *ngFor="let telefone of c.telefones; let idx = index">
+            {{ telefone }}
+            <button class="btn btn-danger btn-sm" (click)="removerTelefone(c, idx)">Remover</button>
+          </li>
         </ul>
         <input type="text" [(ngModel)]="novoTelefone" placeholder="Novo Telefone">
         <button class="btn btn-primary" (click)="adicionarTelefone(c)">Adicionar Telefone</button>

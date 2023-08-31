@@ -185,6 +185,19 @@ export class PrincipalComponent {
     }
   }
 
+  removerTelefone(cliente: Cliente, idx: number): void {
+    cliente.telefones.splice(idx, 1);
+    this.servico.editar(cliente).subscribe(
+      () => {
+        alert('Telefone removido com sucesso!');
+      },
+      (error) => {
+        console.error('Erro ao remover telefone:', error);
+        alert('Ocorreu um erro ao remover o telefone.');
+      }
+    );
+  }
+
   ngOnInit(): void {
     this.selecionar();
   }
