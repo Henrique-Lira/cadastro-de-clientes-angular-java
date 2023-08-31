@@ -1,4 +1,5 @@
 import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Cliente } from '../modelo/Cliente';
 import { ClienteService } from '../servico/cliente.service';
 
@@ -10,17 +11,11 @@ import { ClienteService } from '../servico/cliente.service';
 export class PrincipalComponent {
 
   clienteOriginal: Cliente | null = null;
-
-  novoTelefone: string = '';
-
+  formCliente!: FormGroup;
   cliente = new Cliente();
-
-  btnCadastro = true;
-
-  tabela = true;
-
   clientes: Cliente[] = [];
-
+  btnCadastro = true;
+  tabela = true;
   tipos: any[] = [
     { nome: 'Pessoa Física', placeholderDocumento: 'CPF', placeholderrgOuIe: 'RG', documentoMask: '000.000.000-00', },
     { nome: 'Pessoa Jurídica', placeholderDocumento: 'CNPJ', placeholderrgOuIe: 'IE', documentoMask: '00.000.000/0000-00' },
@@ -28,6 +23,7 @@ export class PrincipalComponent {
   placeholderDocumento: string = 'CPF ou CNPJ';
   placeholderrgOuIe: string = 'RG ou IE';
   documentoMask!: string;
+  novoTelefone: string = '';
   termoBusca: string = '';
   filtroAtual!: string;
 
@@ -35,6 +31,16 @@ export class PrincipalComponent {
     private servico: ClienteService,
     @Inject(LOCALE_ID) private locale: string
   ) { }
+
+  ngOnInit(): void {
+    this.selecionar();
+    this.formCliente = new FormGroup({
+      nome: new FormControl('', [Validators.required]),
+      tipo: new FormControl('', [Validators.required]),
+      documento: new FormControl('', [Validators.required]),
+      rgOuIe: new FormControl('')
+    });
+  }
 
   selecionar(): void {
     this.servico.selecionar()
@@ -66,7 +72,6 @@ export class PrincipalComponent {
     this.btnCadastro = false;
     this.tabela = false;
   }
-
 
   removerCliente(cliente: Cliente): void {
     if (confirm(`Deseja realmente excluir o cliente ${cliente.nome}?`)) {
@@ -149,9 +154,7 @@ export class PrincipalComponent {
 
   cancelar() {
     this.cliente = new Cliente();
-
     this.btnCadastro = true;
-
     this.tabela = true;
   }
 
@@ -248,11 +251,6 @@ export class PrincipalComponent {
       this.servico.buscarPorNome(this.termoBusca)
         .subscribe(retorno => this.clientes = retorno);
     }
-  }
-
-
-  ngOnInit(): void {
-    this.selecionar();
   }
 
 }
