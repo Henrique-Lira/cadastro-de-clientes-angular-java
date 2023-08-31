@@ -8,10 +8,11 @@
   </select>
 
   <input type="text" [placeholder]="placeholderDocumento" class="form-control" name="documento"
-  [(ngModel)]="cliente.documento" mask="{{ documentoMask }}">
+    [(ngModel)]="cliente.documento" mask="{{ documentoMask }}">
 
   <!-- RG ou IE -->
-  <input type="text" placeholder="{{ placeholderrgOuIe }}" class="form-control" name="rgOuIe" [(ngModel)]="cliente.rgOuIe">
+  <input type="text" placeholder="{{ placeholderrgOuIe }}" class="form-control" name="rgOuIe"
+    [(ngModel)]="cliente.rgOuIe">
 
   <input *ngIf="btnCadastro" type="button" value="Cadastrar" class="btn btn-primary" (click)="cadastrar()">
   <input *ngIf="!btnCadastro" type="button" value="Alterar" class="btn btn-warning" (click)="editar()">
@@ -55,16 +56,17 @@
       <td>
         <ul>
           <li *ngFor="let telefone of c.telefones; let idx = index">
-            {{ telefone }}
+            {{ telefone | mask: '(00) 00000-0000' }}
             <button class="btn btn-danger btn-sm" (click)="removerTelefone(c, idx)">Remover</button>
           </li>
         </ul>
-        <input type="text" [(ngModel)]="novoTelefone" placeholder="Novo Telefone">
+        <input type="text" [(ngModel)]="novoTelefone" placeholder="Novo Telefone" mask="(00) 00000-0000">
         <button class="btn btn-primary" (click)="adicionarTelefone(c)">Adicionar Telefone</button>
       </td>
 
       <td>
-        {{ c.tipo === 'Pessoa Jurídica' ? (c.documento | mask:'00.000.000/0000-00') : (c.documento | mask:'000.000.000-00') }}
+        {{ c.tipo === 'Pessoa Jurídica' ? (c.documento | mask:'00.000.000/0000-00') : (c.documento |
+        mask:'000.000.000-00') }}
       </td>
       <td>{{ c.rgOuIe }}</td>
       <td>{{ c.dataCadastro | date:'dd/MM/yyyy' }}</td>
