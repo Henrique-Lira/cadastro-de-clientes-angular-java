@@ -40,4 +40,8 @@ export class ClienteService {
     return this.http.get<Cliente[]>(`${this.url}?filtro=inativos`);
   }
 
+  verificarExistenciaDocumento(documento: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.url}/verificarExistenciaDocumento/${documento}`);
+  }
+
 }

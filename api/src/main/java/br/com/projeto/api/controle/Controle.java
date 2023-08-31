@@ -61,4 +61,9 @@ public class Controle {
     public Iterable<Cliente> buscarPorNome(@PathVariable String nome) {
         return acao.findByNomeContainingIgnoreCase(nome);
     }
+
+    @GetMapping("/verificarExistenciaDocumento/{documento}")
+    public boolean verificarExistenciaDocumento(@PathVariable String documento) {
+        return acao.existsByDocumento(documento);
+    }
 }

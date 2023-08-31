@@ -11,5 +11,7 @@ public interface Repositorio extends CrudRepository<Cliente, Long>{
     Iterable<Cliente> findByAtivoTrue();
 
     Iterable<Cliente> findByAtivoFalse();
+
+    boolean existsByDocumento(String documento);
     
 }

@@ -37,18 +37,22 @@ export class PrincipalComponent {
       .subscribe(retorno => this.clientes = retorno)
   }
 
-  cadastrar(): void {
+  async cadastrar(): Promise<void> {
+    const documentoExiste = await this.servico.verificarExistenciaDocumento(this.cliente.documento).toPromise();
+
+    if (documentoExiste) {
+      alert('CPF/CNPJ já está cadastrado.');
+      return;
+    }
+
     this.cliente.dataCadastro = new Date();
     this.cliente.ativo = true;
+
     this.servico.cadastrar(this.cliente)
       .subscribe(retorno => {
-
         this.clientes.push(retorno);
-
         this.cliente = new Cliente();
-
-        alert('Cliente cadastrado com sucesso!')
-
+        alert('Cliente cadastrado com sucesso!');
       });
   }
 
