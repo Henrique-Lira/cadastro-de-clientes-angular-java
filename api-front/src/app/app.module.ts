@@ -13,7 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms'; // Importe o ReactiveFormsModule
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,10 @@ import { ReactiveFormsModule } from '@angular/forms'; // Importe o ReactiveForms
     MatButtonModule,
     MatFormFieldModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatButtonToggleModule,
+
   ],
   providers: [provideNgxMask(),],
   bootstrap: [AppComponent]

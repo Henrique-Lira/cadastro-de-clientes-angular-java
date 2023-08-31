@@ -1,34 +1,190 @@
-body {
-  background-color: #f4f4f4;
-  margin-top: 30px;
-}
 .container {
-  margin-top: 15px;
-  background-color: #ffffff;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
-.form-group {
-  margin-bottom: 15px;
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
-.btn-group {
-  margin-top: 10px;
+
+.form {
+  margin-bottom: 20px;
 }
-.input-group-append {
-  padding-left: 10px;
+
+.search {
+  margin-bottom: 20px;
 }
-.list-unstyled {
-  padding-left: 0;
+
+.button-group {
+  margin-bottom: 20px;
 }
-.thead-light {
-  background-color: #f8f9fa;
+
+.result-card {
+  margin-top: 20px;
 }
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Estilização para a tabela */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+/* Estilização para botões */
+.btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
 .btn-success {
   background-color: #28a745;
-  border-color: #28a745;
+  color: #fff;
 }
+
 .btn-danger {
   background-color: #dc3545;
-  border-color: #dc3545;
+  color: #fff;
+}
+
+/* Estilização para os campos de formulário do Angular Material */
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-label {
+  font-weight: bold;
+}
+
+/* Estilização para a barra de busca */
+.mat-form-field {
+  width: 100%;
+}
+
+/* Estilização para os botões de ação */
+.action-buttons button {
+  margin-right: 5px;
+}
+
+/* Estilização para o formulário */
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.form-field {
+  flex: 1;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+/* Estilização para os campos de entrada */
+.mat-form-field {
+  width: 100%;
+}
+
+/* Estilização para os botões do formulário */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Estilização para os botões */
+.btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Estilização para o formulário */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+/* Estilização para as colunas */
+.form-columns {
+  display: flex;
+  gap: 20px;
+}
+
+/* Estilização para cada campo de entrada */
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Estilização para os botões do formulário */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Estilização para os botões */
+.btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
 }

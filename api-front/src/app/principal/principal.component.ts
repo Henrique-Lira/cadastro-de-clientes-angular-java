@@ -10,6 +10,7 @@ import { ClienteService } from '../servico/cliente.service';
 })
 export class PrincipalComponent {
 
+  displayedColumns: string[] = ['index', 'nome', /* ... Outras colunas ... */];
   clienteOriginal: Cliente | null = null;
   formCliente!: FormGroup;
   cliente = new Cliente();
