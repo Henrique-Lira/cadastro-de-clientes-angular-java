@@ -31,7 +31,7 @@ Este é um projeto desenvolvido em Angular (Frontend) e Java (Backend) para o ge
 ### Frontend
 
 1. Configure o backend como descrito acima.
-2. Navegue até o diretório `frontend` do projeto.
+2. Navegue até o diretório `api-front` do projeto.
 3. Execute o seguinte comando para instalar as dependências:
 $ npm install
 
