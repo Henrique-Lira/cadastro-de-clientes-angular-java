@@ -26,7 +26,7 @@ Este é um projeto desenvolvido em Angular (Frontend) e Java (Backend) para o ge
 2. Configure o banco de dados no arquivo `application.properties`:
    - Na linha 5, substitua `nome_da_sua_database` pelo nome da sua base de dados.
    - Na linha 11, coloque a senha do seu banco de dados.
-3. Execute o build no arquivo `ApiApplication.java` para criar as tabelas.
+3. Execute o build no arquivo `ApiApplication.java` para criar as tabelas e rodar a API.
 
 ### Frontend
 
