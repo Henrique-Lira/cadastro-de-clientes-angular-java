@@ -14,7 +14,10 @@
       (input)="filtrarClientesPorNome()">
     <button class="btn btn-secondary" (click)="limparBusca()">Limpar</button>
   </div>
-  <table class="table table-bordered">
+  <div *ngIf="clientes.length === 0" class="alert alert-warning">
+    Não há clientes para listar.
+  </div>
+  <table class="table table-bordered" *ngIf="clientes.length > 0">
     <thead class="thead-light">
       <tr>
         <th>#</th>
