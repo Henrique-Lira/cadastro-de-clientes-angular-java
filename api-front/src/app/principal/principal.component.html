@@ -1,52 +1,20 @@
 <div class="container mat-elevation-z2">
   <h2 class="title">Gerenciamento de Clientes</h2>
-
-  <form class="form" [formGroup]="formCliente">
-    <mat-form-field class="form-group">
-      <mat-label>Nome</mat-label>
-      <input matInput id="nome" name="nome" [(ngModel)]="cliente.nome" placeholder="Nome" formControlName="nome">
-    </mat-form-field>
-    <mat-form-field class="form-group">
-      <mat-label>Tipo</mat-label>
-      <mat-select id="tipo" name="tipo" [(ngModel)]="cliente.tipo" (change)="pessoaFisicaOuJuridica()"
-        formControlName="tipo">
-        <mat-option *ngFor="let tipo of tipos" [value]="tipo.nome">{{ tipo.nome }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="form-group">
-      <mat-label>{{ placeholderDocumento }}</mat-label>
-      <input matInput type="text" id="documento" name="documento" [(ngModel)]="cliente.documento"
-        [mask]="cliente.tipo === 'Pessoa Jurídica' ? '00.000.000/0000-00' : '000.000.000-00'"
-        [placeholder]="placeholderDocumento" formControlName="documento">
-    </mat-form-field>
-    <mat-form-field class="form-group">
-      <mat-label>{{ placeholderrgOuIe }}</mat-label>
-      <input matInput type="text" id="rgOuIe" name="rgOuIe" [(ngModel)]="cliente.rgOuIe"
-        placeholder="{{ placeholderrgOuIe }}" formControlName="rgOuIe">
-    </mat-form-field>
-    <div class="btn-group">
-      <button mat-raised-button *ngIf="btnCadastro" [disabled]="formCliente.invalid" color="primary"
-        (click)="cadastrar()">Cadastrar</button>
-      <button mat-raised-button *ngIf="!btnCadastro" [disabled]="formCliente.invalid" color="primary"
-        (click)="editar()">Editar</button>
-      <button mat-raised-button *ngIf="!btnCadastro" color="primary" (click)="cancelar()">Cancelar</button>
-    </div>
-  </form><br>
-
+  <button class="btn btn-primary" (click)="abrirDialogCadastro()">Adicionar Novo Cliente</button> <br><br>
+  <div class="filtro btn-group">
+    <button class="btn" [ngClass]="filtroAtual === 'ativos' ? 'btn-selected' : ''"
+      (click)="filtrarClientes('ativos')">Ativos</button>
+    <button class="btn" [ngClass]="filtroAtual === 'inativos' ? 'btn-selected' : ''"
+      (click)="filtrarClientes('inativos')">Inativos</button>
+    <button class="btn" [ngClass]="filtroAtual === 'todos' ? 'btn-selected' : ''"
+      (click)="filtrarClientes('todos')">Todos</button>
+  </div>
   <div class="pesquisa mb-3">
     <input type="text" class="form-control" [(ngModel)]="termoBusca" placeholder="Buscar por nome"
       (input)="filtrarClientesPorNome()">
     <button class="btn btn-secondary" (click)="limparBusca()">Limpar</button>
   </div>
-
-  <div class="btn-group">
-    <button class="btn" [ngClass]="filtroAtual === 'ativos' ? 'btn-selected' : ''" (click)="filtrarClientes('ativos')">Ativos</button>
-    <button class="btn" [ngClass]="filtroAtual === 'inativos' ? 'btn-selected' : ''" (click)="filtrarClientes('inativos')">Inativos</button>
-    <button class="btn" [ngClass]="filtroAtual === 'todos' ? 'btn-selected' : ''" (click)="filtrarClientes('todos')">Todos</button>
-  </div>
-
-
-  <table class="table table-bordered" *ngIf="tabela">
+  <table class="table table-bordered">
     <thead class="thead-light">
       <tr>
         <th>#</th>
@@ -89,7 +57,7 @@
             (click)="alternarAtivoCliente(c)">{{ c.ativo ? 'Ativo' : 'Inativo' }}</button>
         </td>
         <td>
-          <button class="btn btn-success" (click)="selecionarCliente(i)">Editar</button>
+          <button class="btn btn-success" (click)="abrirDialogEditar(i)">Editar</button>
           <button class="btn btn-danger" (click)="removerCliente(c)">Excluir</button>
         </td>
       </tr>

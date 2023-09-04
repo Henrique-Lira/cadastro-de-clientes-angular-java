@@ -16,11 +16,13 @@ import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-
+import { CadastroClienteComponent } from './cadastro-cliente/cadastro-cliente.component';
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
-    PrincipalComponent
+    PrincipalComponent,
+    CadastroClienteComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -39,6 +41,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatIconModule,
     MatCardModule,
     MatButtonToggleModule,
+    MatDialogModule
 
   ],
   providers: [provideNgxMask(),],

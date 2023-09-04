@@ -1,5 +1,7 @@
 import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { CadastroClienteComponent } from '../cadastro-cliente/cadastro-cliente.component';
 import { Cliente } from '../modelo/Cliente';
 import { ClienteService } from '../servico/cliente.service';
 
@@ -15,7 +17,6 @@ export class PrincipalComponent {
   cliente = new Cliente();
   clientes: Cliente[] = [];
   btnCadastro = true;
-  tabela = true;
   tipos: any[] = [
     { nome: 'Pessoa Física', placeholderDocumento: 'CPF', placeholderrgOuIe: 'RG', documentoMask: '000.000.000-00', },
     { nome: 'Pessoa Jurídica', placeholderDocumento: 'CNPJ', placeholderrgOuIe: 'IE', documentoMask: '00.000.000/0000-00' },
@@ -29,6 +30,7 @@ export class PrincipalComponent {
 
   constructor(
     private servico: ClienteService,
+    private dialog: MatDialog,
     @Inject(LOCALE_ID) private locale: string
   ) { }
 
@@ -42,35 +44,42 @@ export class PrincipalComponent {
     });
   }
 
+  abrirDialogCadastro(): void {
+    const dialogRef = this.dialog.open(CadastroClienteComponent, {
+      width: '300px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        this.selecionar();
+        this.atualizarListagem();
+      }
+    });
+  }
+
+  abrirDialogEditar(posicao: number): void {
+    const dialogRef = this.dialog.open(CadastroClienteComponent, {
+      width: '300px',
+      data: { posicao:  posicao}
+    });
+    dialogRef.componentInstance.emEdicao = true;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        this.selecionar();
+        this.atualizarListagem();
+      }
+    });
+  }
+
   selecionar(): void {
     this.servico.selecionar()
       .subscribe(retorno => this.clientes = retorno)
-  }
-
-  async cadastrar(): Promise<void> {
-    const documentoExiste = await this.servico.verificarExistenciaDocumento(this.cliente.documento).toPromise();
-
-    if (documentoExiste) {
-      alert('CPF/CNPJ já está cadastrado.');
-      return;
-    }
-
-    this.cliente.dataCadastro = new Date();
-    this.cliente.ativo = true;
-
-    this.servico.cadastrar(this.cliente)
-      .subscribe(retorno => {
-        this.clientes.push(retorno);
-        this.cliente = new Cliente();
-        alert('Cliente cadastrado com sucesso!');
-      });
   }
 
   selecionarCliente(posicao: number): void {
     this.clienteOriginal = { ...this.clientes[posicao] };
     this.cliente = { ...this.clientes[posicao] };
     this.btnCadastro = false;
-    this.tabela = false;
   }
 
   removerCliente(cliente: Cliente): void {
@@ -80,90 +89,6 @@ export class PrincipalComponent {
         this.clientes.splice(posicao, 1);
         alert('Cliente removido com sucesso!');
       });
-    }
-  }
-
-  editar(): void {
-    // Verificar se o documento foi alterado e se já existe para outro cliente
-    if (this.cliente.documento !== this.clienteOriginal?.documento) {
-      this.servico.verificarExistenciaDocumentoEditando(this.cliente.documento, this.cliente.codigo).subscribe(
-        documentoExiste => {
-          if (documentoExiste) {
-            alert('CPF/CNPJ já está cadastrado.');
-            return;
-          } else {
-            this.realizarEdicao();
-          }
-        },
-        error => {
-          console.error('Erro ao verificar existência de documento:', error);
-          alert('Ocorreu um erro ao verificar o documento.');
-        }
-      );
-    } else {
-      this.realizarEdicao();
-    }
-  }
-
-  private realizarEdicao(): void {
-    this.servico.editar(this.cliente).subscribe(
-      retorno => {
-        let posicao = this.clientes.findIndex(obj => {
-          return obj.codigo == retorno.codigo;
-        });
-
-        this.clientes[posicao] = retorno;
-
-        this.cliente = new Cliente();
-        this.clienteOriginal = null;
-
-        this.btnCadastro = true;
-        this.tabela = true;
-
-        alert('Cliente alterado com sucesso!');
-        this.selecionar(); // Atualizar a lista de clientes
-      },
-      error => {
-        console.error('Erro ao editar cliente:', error);
-        alert('Ocorreu um erro ao editar o cliente.');
-      }
-    );
-  }
-
-  remover(): void {
-
-    this.servico.remover(this.cliente.codigo)
-      .subscribe(retorno => {
-
-        let posicao = this.clientes.findIndex(obj => {
-          return obj.codigo == this.cliente.codigo;
-        });
-
-        this.clientes.splice(posicao, 1)
-
-        this.cliente = new Cliente();
-
-        this.btnCadastro = true;
-
-        this.tabela = true;
-
-        alert('Cliente removido com sucesso!');
-
-      });
-  }
-
-  cancelar() {
-    this.cliente = new Cliente();
-    this.btnCadastro = true;
-    this.tabela = true;
-  }
-
-  pessoaFisicaOuJuridica(): void {
-    const tipoSelecionado = this.tipos.find(tipo => tipo.nome === this.cliente.tipo);
-    if (tipoSelecionado) {
-      this.placeholderDocumento = tipoSelecionado.placeholderDocumento;
-      this.placeholderrgOuIe = tipoSelecionado.placeholderrgOuIe;
-      this.documentoMask = tipoSelecionado.documentoMask;
     }
   }
 
