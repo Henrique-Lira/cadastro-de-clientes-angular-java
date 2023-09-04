@@ -22,6 +22,7 @@ export class ListagemClientesComponent {
     { nome: 'Pessoa Física', placeholderDocumento: 'CPF', placeholderrgOuIe: 'RG', documentoMask: '000.000.000-00', },
     { nome: 'Pessoa Jurídica', placeholderDocumento: 'CNPJ', placeholderrgOuIe: 'IE', documentoMask: '00.000.000/0000-00' },
   ];
+  mostrarTelefoneCompleto: { [key: number]: boolean } = {};
   placeholderDocumento: string = 'CPF ou CNPJ';
   placeholderrgOuIe: string = 'RG ou IE';
   documentoMask!: string;
@@ -167,6 +168,7 @@ export class ListagemClientesComponent {
       this.servico.editar(cliente).subscribe(
         () => {
           cliente.novoTelefone = '';
+          this.mostrarTelefoneCompleto[cliente.codigo] = true; // Mostrar todos os telefones após a adição
           Swal.fire({
             icon: 'success',
             title: 'Sucesso',
@@ -224,6 +226,10 @@ export class ListagemClientesComponent {
       this.servico.buscarPorNome(this.termoBusca)
         .subscribe(retorno => this.clientes = retorno);
     }
+  }
+
+  alternarMostrarTelefone(clienteCodigo: number): void {
+    this.mostrarTelefoneCompleto[clienteCodigo] = !this.mostrarTelefoneCompleto[clienteCodigo];
   }
 
 }

@@ -1,6 +1,7 @@
 <div class="container mat-elevation-z2">
   <h2 class="title">Gerenciamento de Clientes</h2>
-  <button class="btn btn-primary" (click)="abrirDialogCadastro()">Adicionar Novo Cliente</button> <br><br>
+  <button class="btn btn-primary" (click)="abrirDialogCadastro()">Adicionar Novo Cliente</button>
+  <br><br>
   <div class="filtro btn-group">
     <button class="btn" [ngClass]="filtroAtual === 'ativos' ? 'btn-selected' : ''"
       (click)="filtrarClientes('ativos')">Ativos</button>
@@ -23,7 +24,7 @@
         <th>#</th>
         <th>Nome</th>
         <th>Tipo</th>
-        <th>Telefone</th>
+        <th>Telefones</th>
         <th>Documento</th>
         <th>RG ou IE</th>
         <th>Data de Cadastro</th>
@@ -37,18 +38,25 @@
         <td>{{ c.nome }}</td>
         <td>{{ c.tipo }}</td>
         <td>
-          <ul class="list-unstyled">
-            <li *ngFor="let telefone of c.telefones; let idx = index">
-              {{ telefone | mask: '(00) 0000-0000' }}
-              <button class="btn btn-danger btn-sm" (click)="removerTelefone(c, idx)">Remover</button>
+          <ul class="list-unstyled telefone-list">
+            <div class="input-group">
+              <input type="text" id="addTelefone" class="form-control" [(ngModel)]="c.novoTelefone" placeholder="Novo Telefone"
+                mask="(00) 0000-0000">
+              <div class="input-group-append">
+                <button class="btn btn-primary" (click)="adicionarTelefone(c)">Adicionar</button>
+              </div>
+            </div>
+            <li *ngFor="let telefone of c.telefones; let idx = index" class="telefone-list-item">
+              <ng-container *ngIf="idx < 2 || mostrarTelefoneCompleto[c.codigo]">
+                {{ telefone | mask: '(00) 0000-0000' }}
+                <button class="btn btn-danger btn-sm" (click)="removerTelefone(c, idx)">Remover</button>
+              </ng-container>
             </li>
           </ul>
-          <div class="input-group">
-            <input type="text" class="form-control" [(ngModel)]="c.novoTelefone" placeholder="Novo Telefone"
-              mask="(00) 0000-0000">
-            <div class="input-group-append">
-              <button class="btn btn-primary" (click)="adicionarTelefone(c)">Adicionar</button>
-            </div>
+          <div *ngIf="c.telefones.length > 2">
+            <button id="verMais" class="btn btn-link" (click)="mostrarTelefoneCompleto[c.codigo] = !mostrarTelefoneCompleto[c.codigo]">
+              {{ mostrarTelefoneCompleto[c.codigo] ? 'Ver Menos' : 'Ver Mais' }}
+            </button>
           </div>
         </td>
         <td>{{ c.tipo === 'Pessoa Jurídica' ? (c.documento | mask:'00.000.000/0000-00') : (c.documento |

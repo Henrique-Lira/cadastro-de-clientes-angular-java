@@ -216,3 +216,37 @@
   background-color: #dc3545;
   color: #fff;
 }
+
+/* Adicione estilos à lista de números de telefone */
+.telefone-list {
+  list-style-type: none; /* Remova os marcadores de lista */
+  padding: 0; /* Remova o preenchimento padrão da lista */
+}
+
+/* Estilo para cada item da lista de telefone */
+.telefone-list-item {
+  display: flex; /* Use flexbox para alinhar itens horizontalmente */
+  justify-content: space-between; /* Alinhe os itens à esquerda e à direita */
+  align-items: center; /* Alinhe verticalmente ao centro */
+  margin-bottom: 5px; /* Espaçamento inferior entre os itens */
+}
+
+/* Estilo para o botão de remoção */
+.telefone-list-item button {
+  background-color: #dc3545; /* Cor de fundo do botão de remoção */
+  color: white; /* Cor do texto do botão de remoção */
+  border: none; /* Remova a borda do botão */
+  cursor: pointer; /* Altere o cursor ao pairar sobre o botão */
+  padding: 2px 8px; /* Preenchimento interno do botão */
+  border-radius: 4px; /* Bordas arredondadas do botão */
+}
+
+#addTelefone{
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
+
+#verMais{
+  margin-top: -35px;
+  padding: 0;
+}
