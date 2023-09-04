@@ -2,6 +2,7 @@ import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, take } from 'rxjs';
+import Swal from 'sweetalert2';
 import { Cliente } from '../modelo/Cliente';
 import { ClienteService } from '../servico/cliente.service';
 
@@ -87,12 +88,14 @@ export class CadastroClienteComponent implements OnInit {
 
   async cadastrar(): Promise<void> {
     const documentoExiste = await this.servico.verificarExistenciaDocumento(this.cliente.documento).toPromise();
-
     if (documentoExiste) {
-      alert('CPF/CNPJ já está cadastrado.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Aviso',
+        text: 'CPF/CNPJ já está cadastrado.',
+      });
       return;
     }
-
     this.cliente.dataCadastro = new Date();
     this.cliente.ativo = true;
 
@@ -100,7 +103,13 @@ export class CadastroClienteComponent implements OnInit {
       .subscribe(retorno => {
         this.clientes.push(retorno);
         this.cliente = new Cliente();
-        alert('Cliente cadastrado com sucesso!');
+        Swal.fire({
+          icon: 'success',
+          title: 'Sucesso',
+          text: 'Cliente cadastrado com sucesso!',
+        }).then(() => {
+          this.dialogRef.close('success');
+        });
         this.dialogRef.close('success');
       });
   }
@@ -118,7 +127,11 @@ export class CadastroClienteComponent implements OnInit {
       this.servico.verificarExistenciaDocumentoEditando(this.cliente.documento, this.cliente.codigo).subscribe(
         documentoExiste => {
           if (documentoExiste) {
-            alert('CPF/CNPJ já está cadastrado.');
+            Swal.fire({
+              icon: 'warning',
+              title: 'Aviso',
+              text: 'CPF/CNPJ já está cadastrado.',
+            });
             return;
           } else {
             this.realizarEdicao();
@@ -127,6 +140,11 @@ export class CadastroClienteComponent implements OnInit {
         error => {
           console.error('Erro ao verificar existência de documento:', error);
           alert('Ocorreu um erro ao verificar o documento.');
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocorreu um erro ao verificar o documento!',
+          });
         }
       );
     } else {
@@ -149,13 +167,24 @@ export class CadastroClienteComponent implements OnInit {
         this.btnCadastro = true;
         this.tabela = true;
 
-        alert('Cliente alterado com sucesso!');
+        Swal.fire({
+          icon: 'success',
+          title: 'Sucesso',
+          text: 'Cliente alterado com sucesso!',
+        }).then(() => {
+          this.dialogRef.close('success');
+        });
         this.dialogRef.close('success');
         this.selecionar(); // Atualizar a lista de clientes
       },
       error => {
         console.error('Erro ao editar cliente:', error);
         alert('Ocorreu um erro ao editar o cliente.');
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocorreu um erro ao verificar o documento!',
+          });
       }
     );
   }

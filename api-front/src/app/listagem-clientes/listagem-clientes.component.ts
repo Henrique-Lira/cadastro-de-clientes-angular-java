@@ -1,6 +1,7 @@
 import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 import { CadastroClienteComponent } from '../cadastro-cliente/cadastro-cliente.component';
 import { Cliente } from '../modelo/Cliente';
 import { ClienteService } from '../servico/cliente.service';
@@ -83,23 +84,45 @@ export class ListagemClientesComponent {
   }
 
   removerCliente(cliente: Cliente): void {
-    if (confirm(`Deseja realmente excluir o cliente ${cliente.nome}?`)) {
-      this.servico.remover(cliente.codigo).subscribe(retorno => {
-        const posicao = this.clientes.findIndex(obj => obj.codigo == cliente.codigo);
-        this.clientes.splice(posicao, 1);
-        alert('Cliente removido com sucesso!');
-      });
-    }
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: `Deseja realmente excluir o cliente ${cliente.nome}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.servico.remover(cliente.codigo).subscribe(() => {
+          const posicao = this.clientes.findIndex((obj) => obj.codigo == cliente.codigo);
+          this.clientes.splice(posicao, 1);
+          Swal.fire({
+            icon: 'success',
+            title: 'Cliente removido com sucesso!',
+            showConfirmButton: false,
+            timer: 1500, // Fechar automaticamente após 1,5 segundos
+          });
+        });
+      }
+    });
   }
+
 
   alternarAtivoCliente(cliente: Cliente): void {
     const novoStatus = !cliente.ativo;
     this.servico.editar({ ...cliente, ativo: novoStatus })
       .subscribe(retorno => {
         cliente.ativo = retorno.ativo;
+        Swal.fire({
+          icon: 'success',
+          title: 'Status do cliente alterado com sucesso!',
+          showConfirmButton: false,
+          timer: 1500, // Fechar automaticamente após 1,5 segundos
+        });
       });
-  this.atualizarListagem()
+    this.atualizarListagem();
   }
+
 
   atualizarListagem(){
     if(this.filtroAtual === 'ativos'){
@@ -146,27 +169,54 @@ export class ListagemClientesComponent {
       this.servico.editar(cliente).subscribe(
         () => {
           cliente.novoTelefone = ''; // Limpa o campo
-          alert('Telefone adicionado com sucesso!');
+          Swal.fire({
+            icon: 'success',
+            title: 'Sucesso',
+            text: 'Telefone adicionado com sucesso!',
+          });
         },
         (error) => {
           console.error('Erro ao adicionar telefone:', error);
-          alert('Ocorreu um erro ao adicionar o telefone.');
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro',
+            text: 'Ocorreu um erro ao adicionar o telefone',
+          });
         }
       );
     }
   }
 
   removerTelefone(cliente: Cliente, idx: number): void {
-    cliente.telefones.splice(idx, 1);
-    this.servico.editar(cliente).subscribe(
-      () => {
-        alert('Telefone removido com sucesso!');
-      },
-      (error) => {
-        console.error('Erro ao remover telefone:', error);
-        alert('Ocorreu um erro ao remover o telefone.');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Tem certeza que deseja remover este telefone?',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, remover',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        cliente.telefones.splice(idx, 1);
+        this.servico.editar(cliente).subscribe(
+          () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Telefone removido com sucesso!',
+              showConfirmButton: false,
+              timer: 1500, // Fechar automaticamente após 1,5 segundos
+            });
+          },
+          (error) => {
+            console.error('Erro ao remover telefone:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Erro ao remover telefone',
+              text: 'Ocorreu um erro ao remover o telefone. Por favor, tente novamente mais tarde.'
+            });
+          }
+        );
       }
-    );
+    });
   }
 
   filtrarClientesPorNome(): void {
