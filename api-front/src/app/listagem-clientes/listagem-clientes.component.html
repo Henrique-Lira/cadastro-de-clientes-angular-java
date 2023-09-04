@@ -41,14 +41,14 @@
           <ul class="list-unstyled telefone-list">
             <div class="input-group">
               <input type="text" id="addTelefone" class="form-control" [(ngModel)]="c.novoTelefone" placeholder="Novo Telefone"
-                mask="(00) 0000-0000">
+                mask="(00) 00000-0000">
               <div class="input-group-append">
                 <button class="btn btn-primary" (click)="adicionarTelefone(c)">Adicionar</button>
               </div>
             </div>
             <li *ngFor="let telefone of c.telefones; let idx = index" class="telefone-list-item">
               <ng-container *ngIf="idx < 2 || mostrarTelefoneCompleto[c.codigo]">
-                {{ telefone | mask: '(00) 0000-0000' }}
+                {{ telefone | mask: '(00) 00000-0000' }}
                 <button class="btn btn-danger btn-sm" (click)="removerTelefone(c, idx)">Remover</button>
               </ng-container>
             </li>
