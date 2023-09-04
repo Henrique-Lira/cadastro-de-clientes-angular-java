@@ -1,128 +1,46 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
 .title {
   font-size: 24px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
-.form {
+.form-group {
+  width: 100%;
   margin-bottom: 20px;
 }
 
-.button-group {
-  margin-bottom: 20px;
-}
-
-/* Estilização para botões */
-.btn {
-  padding: 5px 10px;
-  margin-right: 5px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  color: #fff;
-}
-
-/* Estilização para os campos de formulário do Angular Material */
-.mat-form-field {
+mat-form-field {
   width: 100%;
 }
 
-.mat-label {
-  font-weight: bold;
+mat-label {
+  font-size: 16px;
 }
 
-/* Estilização para a barra de busca */
-.mat-form-field {
+mat-select {
   width: 100%;
 }
 
-/* Estilização para os botões de ação */
-.action-buttons button {
-  margin-right: 5px;
-}
-
-/* Estilização para o formulário */
-.form {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.form-field {
-  flex: 1;
-  margin-right: 20px;
-  margin-bottom: 20px;
-}
-
-/* Estilização para os campos de entrada */
-.mat-form-field {
+input[type="text"] {
   width: 100%;
 }
 
-/* Estilização para os botões */
-.btn {
-  padding: 5px 10px;
-  margin-right: 5px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  color: #fff;
-}
-
-/* Estilização para o formulário */
-.form {
+.btn-group {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Estilização para as colunas */
-.form-columns {
-  display: flex;
-  gap: 20px;
-}
-
-/* Estilização para cada campo de entrada */
-.mat-form-field {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-/* Estilização para os botões do formulário */
-.form-buttons {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-/* Estilização para os botões */
-.btn {
-  padding: 5px 10px;
-  margin-right: 5px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.btn-success {
-  background-color: #28a745;
-  color: #fff;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  color: #fff;
+button {
+  flex-grow: 1;
+  margin-right: 10px;
 }

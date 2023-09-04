@@ -24,7 +24,7 @@
         <th>Documento</th>
         <th>RG ou IE</th>
         <th>Data de Cadastro</th>
-        <th>Ativo</th>
+        <th>Status</th>
         <th>Ações</th>
       </tr>
     </thead>
@@ -53,13 +53,27 @@
         <td>{{ c.rgOuIe }}</td>
         <td>{{ c.dataCadastro | date:'dd/MM/yyyy' }}</td>
         <td>
-          <button class="btn" [ngClass]="{'btn-success': c.ativo, 'btn-danger': !c.ativo}"
-            (click)="alternarAtivoCliente(c)">{{ c.ativo ? 'Ativo' : 'Inativo' }}</button>
+          <button class="btn" [ngClass]="{'btn-success': c.ativo, 'btn-danger': !c.ativo}">{{ c.ativo ? 'Ativo' :
+            'Inativo' }}</button>
         </td>
         <td>
-          <button class="btn btn-success" (click)="abrirDialogEditar(i)">Editar</button>
-          <button class="btn btn-danger" (click)="removerCliente(c)">Excluir</button>
+          <button mat-icon-button [matMenuTriggerFor]="actionsMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #actionsMenu="matMenu">
+            <button mat-menu-item (click)="abrirDialogEditar(i)">
+              <mat-icon>edit</mat-icon> Editar
+            </button>
+            <button mat-menu-item (click)="removerCliente(c)">
+              <mat-icon>delete</mat-icon> Excluir
+            </button>
+            <button mat-menu-item (click)="alternarAtivoCliente(c)">
+              <mat-icon>{{ c.ativo ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+              {{ c.ativo ? 'Desativar' : 'Ativar' }}
+            </button>
+          </mat-menu>
         </td>
+
       </tr>
     </tbody>
   </table>

@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http'
+import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -41,7 +42,8 @@ import { CadastroClienteComponent } from './cadastro-cliente/cadastro-cliente.co
     MatIconModule,
     MatCardModule,
     MatButtonToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule
 
   ],
   providers: [provideNgxMask(),],
