@@ -6,11 +6,11 @@ import { Cliente } from '../modelo/Cliente';
 import { ClienteService } from '../servico/cliente.service';
 
 @Component({
-  selector: 'app-principal',
-  templateUrl: './principal.component.html',
-  styleUrls: ['./principal.component.scss']
+  selector: 'app-listagem-clientes',
+  templateUrl: './listagem-clientes.component.html',
+  styleUrls: ['./listagem-clientes.component.scss']
 })
-export class PrincipalComponent {
+export class ListagemClientesComponent {
 
   clienteOriginal: Cliente | null = null;
   formCliente!: FormGroup;
