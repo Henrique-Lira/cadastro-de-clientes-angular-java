@@ -49,7 +49,6 @@ export class ListagemClientesComponent {
     const dialogRef = this.dialog.open(CadastroClienteComponent, {
       width: '300px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
         this.selecionar();
@@ -122,7 +121,6 @@ export class ListagemClientesComponent {
       });
     this.atualizarListagem();
   }
-
 
   atualizarListagem(){
     if(this.filtroAtual === 'ativos'){

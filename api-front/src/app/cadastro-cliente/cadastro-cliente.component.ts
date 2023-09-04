@@ -1,6 +1,6 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, take } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Cliente } from '../modelo/Cliente';
@@ -98,7 +98,6 @@ export class CadastroClienteComponent implements OnInit {
     }
     this.cliente.dataCadastro = new Date();
     this.cliente.ativo = true;
-
     this.servico.cadastrar(this.cliente)
       .subscribe(retorno => {
         this.clientes.push(retorno);
@@ -157,15 +156,11 @@ export class CadastroClienteComponent implements OnInit {
         let posicao = this.clientes.findIndex(obj => {
           return obj.codigo == retorno.codigo;
         });
-
         this.clientes[posicao] = retorno;
-
         this.cliente = new Cliente();
         this.clienteOriginal = null;
-
         this.btnCadastro = true;
         this.tabela = true;
-
         Swal.fire({
           icon: 'success',
           title: 'Sucesso',
