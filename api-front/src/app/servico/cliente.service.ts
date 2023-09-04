@@ -44,7 +44,6 @@ export class ClienteService {
     return this.http.get<boolean>(`${this.url}/verificarExistenciaDocumento/${documento}`);
   }
 
-  // No serviço ClienteService
   adicionarTelefone(codigo: number, telefone: string): Observable<Cliente> {
     return this.http.post<Cliente>(`${this.url}/${codigo}/adicionar-telefone`, telefone);
   }

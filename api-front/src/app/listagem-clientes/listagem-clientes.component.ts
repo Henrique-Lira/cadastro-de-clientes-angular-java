@@ -100,7 +100,7 @@ export class ListagemClientesComponent {
             icon: 'success',
             title: 'Cliente removido com sucesso!',
             showConfirmButton: false,
-            timer: 1500, // Fechar automaticamente após 1,5 segundos
+            timer: 1500,
           });
         });
       }
@@ -117,7 +117,7 @@ export class ListagemClientesComponent {
           icon: 'success',
           title: 'Status do cliente alterado com sucesso!',
           showConfirmButton: false,
-          timer: 1500, // Fechar automaticamente após 1,5 segundos
+          timer: 1500,
         });
       });
     this.atualizarListagem();
@@ -165,10 +165,10 @@ export class ListagemClientesComponent {
 
   adicionarTelefone(cliente: Cliente): void {
     if (cliente.novoTelefone.trim() !== '') {
-      cliente.telefones.push(cliente.novoTelefone); // Adiciona o telefone à lista de telefones do cliente
+      cliente.telefones.push(cliente.novoTelefone);
       this.servico.editar(cliente).subscribe(
         () => {
-          cliente.novoTelefone = ''; // Limpa o campo
+          cliente.novoTelefone = '';
           Swal.fire({
             icon: 'success',
             title: 'Sucesso',
@@ -203,7 +203,7 @@ export class ListagemClientesComponent {
               icon: 'success',
               title: 'Telefone removido com sucesso!',
               showConfirmButton: false,
-              timer: 1500, // Fechar automaticamente após 1,5 segundos
+              timer: 1500,
             });
           },
           (error) => {

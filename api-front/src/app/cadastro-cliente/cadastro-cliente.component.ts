@@ -122,7 +122,6 @@ export class CadastroClienteComponent implements OnInit {
   }
 
   editar(): void {
-    // Verificar se o documento foi alterado e se já existe para outro cliente
     if (this.cliente.documento !== this.clienteOriginal?.documento) {
       this.servico.verificarExistenciaDocumentoEditando(this.cliente.documento, this.cliente.codigo).subscribe(
         documentoExiste => {
@@ -175,7 +174,7 @@ export class CadastroClienteComponent implements OnInit {
           this.dialogRef.close('success');
         });
         this.dialogRef.close('success');
-        this.selecionar(); // Atualizar a lista de clientes
+        this.selecionar();
       },
       error => {
         console.error('Erro ao editar cliente:', error);
